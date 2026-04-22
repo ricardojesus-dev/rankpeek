@@ -36,58 +36,71 @@ export default function SeoReport({ data }: Props) {
     const scoreColor = data.score ? getColor(data.score) : "gray"
 
     return (
-        <div className="mt-8 flex flex-col gap-5 text-white">
+        <div className="mt-8 grid gap-6 text-white max-w-5xl mx-auto">
     
             {/* SCORE SECTION*/}
-            <div className="p-6 rounded-xl bg-zinc-900 text-center border border-zinc-800">
-                <h2 className="text-lg text-zinc-400">SEO Score</h2>
+            <div className="p-8 rounded-2xl bg-zinc-900 border border-zinc-800 text-center">
+                <h2 className="text-zinc-400">SEO Score</h2>
 
-                <div className={`text-6xl font-bold ${scoreColor}`}>
-                    {data.score}/100
+                <div className={`text-7xl font-bold ${scoreColor}`}>
+                    {data.score}
                 </div>
             </div>
 
             {/* INFO GRID*/}
-            <div className="p-5 rounded-xl bg-zinc-900 border border-zinc-800 flex flex-col gap-2">
-                <div><strong>Title:</strong> {data.title}</div>
-                <div>
-                    <strong>H1:</strong>
-                    <ul className="text-sm text-zinc-300">
-                        {data.h1?.map((h,i) => (
-                            <li key={i}> * {h}</li>
-                        ))}
-                    </ul>
-                </div>
-                <div>
-                    <strong>H2:</strong> {data.h2?.length || 0}
+            <div className="grid md:grid-cols-2 gap-6">
+                <div className="p-5 rounded-xl bg-zinc-900 border border-zinc-800">
+                    <h3 className="text-zinc-400 mb-3">Content</h3>
+
+                    <div className="text-sm space-y-2">
+                        <div><strong>Title:</strong> {data.title}</div>
+
+                        <div>
+                        <strong>H1:</strong>
+                        <ul className="text-zinc-300">
+                            {data.h1?.map((h, i) => (
+                            <li key={i}>• {h}</li>
+                            ))}
+                        </ul>
+                        </div>
+
+                        <div><strong>Meta:</strong> {data.metaDescription || "Missing"}</div>
                     </div>
-
-                    <div>
-                    <strong>H3:</strong> {data.h3?.length || 0}
                 </div>
-                <div><strong>Meta:</strong> {data.metaDescription || "Missing"}</div>
+                <div className="p-5 rounded-xl bg-zinc-900 border border-zinc-800">
+                    <h3 className="text-zinc-400 mb-3">Structure</h3>
+
+                    <div className="text-sm space-y-2">
+                        <div>H1 count: {data.h1?.length}</div>
+                        <div>H2 count: {data.h2?.length}</div>
+                        <div>H3 count: {data.h3?.length}</div>
+                </div>
+            </div>
             </div>
 
-            <div className="p-5 rounded-xl bg-zinc-900 border border-zinc-800">
-                <h3 className="text-zinc-400 mb-2">Technical SEO</h3>
+            
 
-                <div className="text-sm space-y-1">
+            <div className="p-5 rounded-xl bg-zinc-900 border border-zinc-800">
+                <h3 className="text-zinc-400 mb-3">Technical</h3>
+
+                <div className="text-sm space-y-2">
                     <div>Lang: {data.lang || "Missing"}</div>
-                    <div>Canonical: {data.canonical ? "Present" : "Missing"}</div>
-                    <div>OG Title: {data.ogTitle ? "Present" : "Missing"}</div>
-                    <div>OG Description: {data.ogDescription ? "Present" : "Missing"}</div>
+                    <div>Canonical: {data.canonical ? "✔" : "✖"}</div>
+                    <div>OG Title: {data.ogTitle ? "✔" : "✖"}</div>
+                    <div>OG Description: {data.ogDescription ? "✔" : "✖"}</div>
                 </div>
             </div>
+
             <div className="p-5 rounded-xl bg-zinc-900 border border-zinc-800">
-                <h3 className="text-zinc-400 mb-2">Content</h3>
+                <h3 className="text-zinc-400 mb-3">Content Depth</h3>
 
                 <div className="text-sm">
-                    Text length: {data.textLength} characters
+                    {data.textLength} characters
                 </div>
             </div>
 
             <div className="p-5 rounded-xl bg-zinc-900 border border-zinc-800">
-                <h3 className="text-zinc-400 mb-2">Score breakdown</h3>
+                <h3 className="text-zinc-400 mb-3">Issues & Analysis</h3>
 
                 <ul className="text-sm text-zinc-300 space-y-1">
                     {data.breakdown?.map((b, i) => (
