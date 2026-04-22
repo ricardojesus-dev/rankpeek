@@ -5,8 +5,18 @@ import { useState } from "react"
 export default function UrlInput(){
     const [url, setUrl] = useState("");
     
-    function handleAnalyze() {
-        console.log(`Analizando ${url}`);
+    async function handleAnalyze() {
+        const res = await fetch('/api/analyze',{
+            method:"POST",
+            headers: {
+                "Content-Type":"application/json"
+            },
+            body: JSON.stringify({url})
+        });
+
+        const data = await res.json();
+
+        console.log(data);
         
     }
     return(
