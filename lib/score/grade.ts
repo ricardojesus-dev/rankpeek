@@ -1,3 +1,5 @@
+// rankpeek/lib/score/grade.ts
+
 export function getSeoGrade(score: number) {
   if (score >= 90) return { grade: "A+", color: "#22c55e" }
   if (score >= 80) return { grade: "A", color: "#22c55e" }
