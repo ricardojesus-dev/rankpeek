@@ -4,26 +4,30 @@ type Props = {
 
 export default function SeoReport({ data }: Props) {
     if (!data) return null
-        
-    const scoreColor = 
-        data.score > 80
-        ? "green"
-        : data.score > 50
-        ? "orange"
-        : "red"
+    const getColor = (score:number) => {
+        if (score >= 80) return "green"
+        if (score >= 50) return "orange"
+        return "red"
+    }
+    const scoreColor = getColor(data.score);
 
     return (
-        <div style={{marginTop:20}}>
-        <h2>SEO Report</h2>
-        {/* SCORE */}
-        <div style = {{fontSize:32, fontWeight:"bold", color:scoreColor}}>
-            {data.score} / 100
-        </div>
+        <div style={{marginTop:30}}>
+    
+            {/* SCORE SECTION*/}
+            <div style={{textAlign:"center", marginBottom:20}}>
+                <h2>SEO Report</h2>
+                <div style = {{fontSize:48, fontWeight:"bold", color:scoreColor}}>
+                    {data.score} / 100
+                </div>
+            </div>
 
-        {/* INFO */}
-        <p><strong>Title: {data.title}</strong></p>
-        <p><strong>H1: {data.h1}</strong></p>
-        <p><strong>Meta: {data.metaDescription || "Missing"}</strong></p>
+            {/* INFO GRID*/}
+            <div style={{display:"grid",gap:10}}>
+                <div><strong>Title:</strong> {data.title}</div>
+                <div><strong>H1:</strong> {data.h1}</div>
+                <div><strong>Meta:</strong> {data.metaDescription || "Missing"}</div>
+            </div>
         </div>
     )
 }
