@@ -1,3 +1,4 @@
+// types/seoReport.ts
 export type SeoReportData = {
     url?: string,
     title?: string,

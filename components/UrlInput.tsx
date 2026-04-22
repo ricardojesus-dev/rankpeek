@@ -1,9 +1,9 @@
 // @/components/UrlInput.tsx
 "use client"
 import { useState } from "react"
-
+import type { SeoReportData } from "@/types/seoReport";
 type Props = {
-    setData: (data:any) => void
+    setData: (data:SeoReportData) => void
 }
 
 export default function UrlInput({ setData }: Props){
@@ -13,6 +13,7 @@ export default function UrlInput({ setData }: Props){
 
     async function handleAnalyze() {
         setLoading(true);
+        setError(null);
         try{
             const res = await fetch('/api/analyze',{
                 method:"POST",
@@ -21,6 +22,9 @@ export default function UrlInput({ setData }: Props){
                 },
                 body: JSON.stringify({url})
             });
+            if(!res.ok){
+                throw new Error("API Error");
+            }
 
             const data = await res.json();
             setData(data);
@@ -29,9 +33,11 @@ export default function UrlInput({ setData }: Props){
         } catch (error){
             setError("Something went wrong analyzing the URL")
             console.error("Error: ", error);
+        } finally{
+            setLoading(false);
         }
 
-        setLoading(false);
+        
         
     }
     return(
@@ -70,6 +76,11 @@ export default function UrlInput({ setData }: Props){
                 >
                 {loading ? "Analyzing..." : "Analyze SEO"}
             </button>
+            {error && (
+                <p style={{ color: "red", fontSize: "12px" }}>
+                    {error}
+                </p>
+            )}
             
             
         </div>

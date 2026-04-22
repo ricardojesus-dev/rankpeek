@@ -1,8 +1,11 @@
+// components/SeoReport.tsx
+import type { SeoReportData } from "@/types/seoReport"
 type Props = {
-    data:any
+    data: SeoReportData | null
 }
 
 export default function SeoReport({ data }: Props) {
+    
     if (!data) {
         return (
             <div style={{
@@ -30,7 +33,7 @@ export default function SeoReport({ data }: Props) {
         if (score >= 50) return "orange"
         return "red"
     }
-    const scoreColor = getColor(data.score);
+    const scoreColor = data.score ? getColor(data.score) : "gray"
 
     return (
         <div style={{marginTop:30}}>
