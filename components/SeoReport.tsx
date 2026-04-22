@@ -113,6 +113,52 @@ export default function SeoReport({ data }: Props) {
             <div>H3: {data.h3?.length ?? 0}</div>
           </div>
         </div>
+        
+        {/* IMAGES */}
+        <div className="p-5 rounded-xl bg-zinc-900 border border-zinc-800">
+            <div className="flex items-center gap-2 mb-3 text-zinc-400">
+                <FileText size={16} />
+                <h3>Images</h3>
+            </div>
+
+            <div className="text-sm space-y-2">
+
+                <div className="flex justify-between">
+                <span>Total images</span>
+                <span className="text-white">{data.images?.total ?? 0}</span>
+                </div>
+
+                <div className="flex justify-between">
+                <span>Missing alt text</span>
+                <span className={data.images?.withoutAlt ? "text-red-400" : "text-green-400"}>
+                    {data.images?.withoutAlt ?? 0}
+                </span>
+                </div>
+
+            </div>
+        </div>
+
+        {/* LINKS */}
+        <div className="p-5 rounded-xl bg-zinc-900 border border-zinc-800">
+            <div className="flex items-center gap-2 mb-3 text-zinc-400">
+                <Globe size={16} />
+                <h3>Links</h3>
+            </div>
+
+            <div className="text-sm space-y-2">
+
+                <div className="flex justify-between">
+                <span>Internal links</span>
+                <span className="text-white">{data.links?.internal ?? 0}</span>
+                </div>
+
+                <div className="flex justify-between">
+                <span>External links</span>
+                <span className="text-white">{data.links?.external ?? 0}</span>
+                </div>
+
+            </div>
+        </div>
 
       </div>
 
