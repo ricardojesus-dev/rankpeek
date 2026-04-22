@@ -49,9 +49,13 @@ export default function UrlInput({ setData }: Props) {
       setStatus("reachable");
       setData(data);
       setUrl("");
-    } catch (error: any) {
+    } catch (error: unknown) {
       setStatus("unreachable")
-      setError("Something went wrong analyzing the URL")
+      const message =
+        error instanceof Error
+        ? error.message
+        : "Something went wrong analyzing the URL";
+      setError(message)
     } finally {
       setLoading(false)
     }
@@ -91,6 +95,12 @@ export default function UrlInput({ setData }: Props) {
                      disabled:opacity-50 transition-all duration-200"
         />
       </div>
+      
+      {status !== "idle" && (
+        <p className="text-[11px] font-mono text-zinc-500 mt-2">
+            Status: {status}
+        </p>
+       )}
 
       {/* Button */}
       <button
