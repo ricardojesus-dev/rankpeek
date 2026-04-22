@@ -1,3 +1,4 @@
+// components/ScoreCircle.tsx
 import { getSeoGrade } from "@/lib/score/grade"
 
 type Props = {
@@ -5,32 +6,34 @@ type Props = {
 }
 
 export default function ScoreCircle({ score = 0 }: Props) {
-  const radius = 60
-  const stroke = 10
+  const radius = 72
+  const stroke = 8
   const normalizedRadius = radius - stroke / 2
   const circumference = normalizedRadius * 2 * Math.PI
-
-  const progress = score / 100
-  const strokeDashoffset = circumference - progress * circumference
+  const strokeDashoffset = circumference - (score / 100) * circumference
 
   const { color: gradeColor, grade } = getSeoGrade(score)
 
+  const gradeStyles =
+    score >= 80
+      ? { badge: "bg-emerald-500/10 border-emerald-500/25 text-emerald-400" }
+      : score >= 50
+      ? { badge: "bg-amber-500/10 border-amber-500/25 text-amber-400" }
+      : { badge: "bg-red-500/10 border-red-500/25 text-red-400" }
+
   return (
-    <div className="flex items-center justify-center">
-
+    <div className="flex flex-col items-center gap-4">
       <svg height={radius * 2} width={radius * 2}>
-
-        {/* BACKGROUND */}
+        {/* Track */}
         <circle
-          stroke="#27272a"
+          stroke="rgba(255,255,255,0.05)"
           fill="transparent"
           strokeWidth={stroke}
           r={normalizedRadius}
           cx={radius}
           cy={radius}
         />
-
-        {/* PROGRESS */}
+        {/* Progress arc */}
         <circle
           stroke={gradeColor}
           fill="transparent"
@@ -44,35 +47,29 @@ export default function ScoreCircle({ score = 0 }: Props) {
           style={{
             transform: "rotate(-90deg)",
             transformOrigin: "50% 50%",
-            transition: "stroke-dashoffset 0.6s ease"
+            transition: "stroke-dashoffset 0.8s cubic-bezier(0.4,0,0.2,1)",
+            filter: `drop-shadow(0 0 8px ${gradeColor}60)`,
           }}
         />
-
-        {/* SCORE (MAIN) */}
+        {/* Score number */}
         <text
           x="50%"
-          y="48%"
+          y="55%"
           textAnchor="middle"
           fill={gradeColor}
-          fontSize="22"
+          fontSize="28"
           fontWeight="700"
+          fontFamily="ui-monospace, monospace"
         >
           {score}
         </text>
 
-        {/* GRADE (SECONDARY) */}
-        <text
-          x="50%"
-          y="65%"
-          textAnchor="middle"
-          fill="#a1a1aa"
-          fontSize="12"
-          fontWeight="500"
-        >
-          Grade {grade}
-        </text>
-
       </svg>
+
+      {/* Grade badge */}
+      <span className={`inline-flex items-center px-3 py-1 rounded-full text-[11px] font-mono font-semibold tracking-widest border ${gradeStyles.badge}`}>
+        GRADE {grade}
+      </span>
     </div>
   )
 }
