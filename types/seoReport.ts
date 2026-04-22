@@ -1,12 +1,20 @@
-// types/seoReport.ts
 export type SeoReportData = {
-    url?: string,
-    title?: string,
-    h1?: string,
-    metaDescription?:string,
-    score?:number,
+  url?: string
+  title?: string
+  h1?: string[]
+  h2?: string[]
+  h3?: string[]
 
-    issues?: string[],
-    warnings?: string[],
-    good?: string[]
+  metaDescription?: string
+
+  canonical?: string
+  lang?: string
+
+  ogTitle?: string
+  ogDescription?: string
+
+  textLength?: number
+
+  score?: number
+  breakdown?: string[]
 }

@@ -50,17 +50,59 @@ export default function SeoReport({ data }: Props) {
             {/* INFO GRID*/}
             <div className="p-5 rounded-xl bg-zinc-900 border border-zinc-800 flex flex-col gap-2">
                 <div><strong>Title:</strong> {data.title}</div>
-                <div><strong>H1:</strong> {data.h1}</div>
+                <div>
+                    <strong>H1:</strong>
+                    <ul className="text-sm text-zinc-300">
+                        {data.h1?.map((h,i) => (
+                            <li key={i}> * {h}</li>
+                        ))}
+                    </ul>
+                </div>
+                <div>
+                    <strong>H2:</strong> {data.h2?.length || 0}
+                    </div>
+
+                    <div>
+                    <strong>H3:</strong> {data.h3?.length || 0}
+                </div>
                 <div><strong>Meta:</strong> {data.metaDescription || "Missing"}</div>
             </div>
 
-            {/* INSIGHTS */}
             <div className="p-5 rounded-xl bg-zinc-900 border border-zinc-800">
+                <h3 className="text-zinc-400 mb-2">Technical SEO</h3>
+
+                <div className="text-sm space-y-1">
+                    <div>Lang: {data.lang || "Missing"}</div>
+                    <div>Canonical: {data.canonical ? "Present" : "Missing"}</div>
+                    <div>OG Title: {data.ogTitle ? "Present" : "Missing"}</div>
+                    <div>OG Description: {data.ogDescription ? "Present" : "Missing"}</div>
+                </div>
+            </div>
+            <div className="p-5 rounded-xl bg-zinc-900 border border-zinc-800">
+                <h3 className="text-zinc-400 mb-2">Content</h3>
+
+                <div className="text-sm">
+                    Text length: {data.textLength} characters
+                </div>
+            </div>
+
+            <div className="p-5 rounded-xl bg-zinc-900 border border-zinc-800">
+                <h3 className="text-zinc-400 mb-2">Score breakdown</h3>
+
+                <ul className="text-sm text-zinc-300 space-y-1">
+                    {data.breakdown?.map((b, i) => (
+                    <li key={i}>• {b}</li>
+                    ))}
+                </ul>
+            </div>
+
+            
+            {/* <div className="p-5 rounded-xl bg-zinc-900 border border-zinc-800">
             
             <h3 className="mb-3 text-zinc-300">Insights</h3>
 
                 <div className="flex flex-wrap gap-2">
-                {/* ISSUES */}
+                
                 {data.issues?.map((issue, i) => (
                     <span key={i} className="text-xs px-2 py-1 rounded-md bg-red-500/20 text-red-400">
                         {issue}
@@ -79,7 +121,7 @@ export default function SeoReport({ data }: Props) {
                     </span>
                 ))}
                 </div>
-            </div>
+            </div> */}
         </div>
     )
 }
