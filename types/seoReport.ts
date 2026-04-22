@@ -4,17 +4,29 @@ export type SeoReportData = {
   h1?: string[]
   h2?: string[]
   h3?: string[]
-
-  metaDescription?: string
-
-  canonical?: string
   lang?: string
-
+  canonical?: string
+  textLength: number
+  metaDescription?: string
   ogTitle?: string
   ogDescription?: string
 
-  textLength?: number
+  images?: {
+    total: number
+    withoutAlt: number
+  }
 
+  links?: {
+    internal: number
+    external: number
+  }
+
+  wordCount?: number
   score?: number
   breakdown?: string[]
+
+  // 👇 AÑADE ESTO
+  issues?: string[]
+  warnings?: string[]
+  good?: string[]
 }

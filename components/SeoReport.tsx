@@ -169,29 +169,69 @@ export default function SeoReport({ data }: Props) {
       </div>
 
       {/* BREAKDOWN */}
-      <div className="p-5 rounded-xl bg-zinc-900 border border-zinc-800">
-        <div className="flex items-center gap-2 mb-3 text-zinc-400">
-          <AlertTriangle size={16} />
-          <h3>Issues & Analysis</h3>
+        <div className="p-5 rounded-xl bg-zinc-900 border border-zinc-800">
+            <div className="flex items-center gap-2 mb-3 text-zinc-400">
+            <AlertTriangle size={16} />
+            <h3>Issues & Analysis</h3>
+            </div>
+
+            <ul className="text-sm space-y-2">
+            {data.breakdown && data.breakdown.length > 0 ? (
+                data.breakdown.map((b, i) => (
+                <li key={i} className="flex items-start gap-2 text-zinc-300">
+                    <span className="text-red-400 mt-1">•</span>
+                    <span>{b}</span>
+                </li>
+                ))
+            ) : (
+                <li className="text-green-400 flex items-center gap-2">
+                <CheckCircle size={16} />
+                No issues detected
+                </li>
+            )}
+            </ul>
         </div>
+        {/* INSIGHTS */}
+            <div className="p-5 rounded-xl bg-zinc-900 border border-zinc-800">
+            <h3 className="text-zinc-400 mb-4">Insights</h3>
 
-        <ul className="text-sm space-y-2">
-          {data.breakdown && data.breakdown.length > 0 ? (
-            data.breakdown.map((b, i) => (
-              <li key={i} className="flex items-start gap-2 text-zinc-300">
-                <span className="text-red-400 mt-1">•</span>
-                <span>{b}</span>
-              </li>
-            ))
-          ) : (
-            <li className="text-green-400 flex items-center gap-2">
-              <CheckCircle size={16} />
-              No issues detected
-            </li>
-          )}
-        </ul>
-      </div>
+            <div className="flex flex-wrap gap-2">
 
+                {/* ISSUES */}
+                {data.issues?.map((item, i) => (
+                <span
+                    key={`issue-${i}`}
+                    className="flex items-center gap-1 px-3 py-1 rounded-full text-xs bg-red-500/20 text-red-400 border border-red-500/30"
+                >
+                    <XCircle size={14} />
+                    {item}
+                </span>
+                ))}
+
+                {/* WARNINGS */}
+                {data.warnings?.map((item, i) => (
+                <span
+                    key={`warn-${i}`}
+                    className="flex items-center gap-1 px-3 py-1 rounded-full text-xs bg-yellow-500/20 text-yellow-400 border border-yellow-500/30"
+                >
+                    <AlertTriangle size={14} />
+                    {item}
+                </span>
+                ))}
+
+                {/* GOOD */}
+                {data.good?.map((item, i) => (
+                <span
+                    key={`good-${i}`}
+                    className="flex items-center gap-1 px-3 py-1 rounded-full text-xs bg-green-500/20 text-green-400 border border-green-500/30"
+                >
+                    <CheckCircle size={14} />
+                    {item}
+                </span>
+                ))}
+
+            </div>
+        </div>
     </div>
   )
 }
