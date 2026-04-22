@@ -35,16 +35,40 @@ export default function UrlInput({ setData }: Props){
         
     }
     return(
-        <div>
+        <div style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "12px",
+            maxWidth: "500px",
+            margin: "0 auto"
+            }}>
+        
             <input
                 type="text"
-                placeholder="Enter URL"
+                placeholder="Enter a website URL (https://...)"
                 value={url}
-                onChange={ (e) => setUrl(e.target.value)}
-            />
+                onChange={(e) => setUrl(e.target.value)}
+                style={{
+                    padding: "12px",
+                    borderRadius: "8px",
+                    border: "1px solid #ccc",
+                    fontSize: "14px"
+                }}
+                />
 
-            <button onClick={handleAnalyze} disabled = {loading || !url}>
-                {loading ? "Analyzing...":"Analize"}
+            <button
+                onClick={handleAnalyze}
+                disabled={loading || !url}
+                style={{
+                    padding: "12px",
+                    borderRadius: "8px",
+                    background: loading ? "#999" : "#000",
+                    color: "white",
+                    fontWeight: "bold",
+                    cursor: "pointer"
+                }}
+                >
+                {loading ? "Analyzing..." : "Analyze SEO"}
             </button>
             
             
