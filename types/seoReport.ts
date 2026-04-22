@@ -4,5 +4,9 @@ export type SeoReportData = {
     title?: string,
     h1?: string,
     metaDescription?:string,
-    score?:number
+    score?:number,
+
+    issues?: string[],
+    warnings?: string[],
+    good?: string[]
 }

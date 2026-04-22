@@ -25,11 +25,33 @@ export async function POST(req: Request) {
         metaDescription
     })
 
+    const issues: string[] = []
+    const warnings: string[] = []
+    const good: string[] = []
+
+    if (!title) issues.push("Missing title")
+    if (!h1) issues.push("Missing H1")
+    if (!metaDescription) issues.push("Missing meta description")
+
+    if (title && title.length > 60) {
+        warnings.push("Title is too long")
+    }
+
+    if (!metaDescription) {
+        warnings.push("No meta description found")
+    }
+
+    if (title) good.push("Title exists")
+    if (h1) good.push("H1 exists")
+    if (metaDescription) good.push("Meta description exists")
     return Response.json({
         url, 
         title,
         h1,
         metaDescription,
-        score
+        score,
+        issues,
+        warnings,
+        good
     });
 }
