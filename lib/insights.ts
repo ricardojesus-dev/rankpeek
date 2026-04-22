@@ -1,3 +1,4 @@
+// lib/insights.ts
 type SeoData = {
   title?: string
   metaDescription?: string

@@ -10,8 +10,8 @@ function normalize(input: SeoInputData):SeoNormalizedInput {
         title: input.title ?? "",
         metaDescription: input.metaDescription ?? "",
         h1: input.h1 ?? [],
-        h2: input.h1 ?? [],
-        h3: input.h1 ?? [],
+        h2: input.h2 ?? [],
+        h3: input.h3 ?? [],
         textLength: input.textLength ?? 0,
         canonical: input.canonical ?? "",
         images: {

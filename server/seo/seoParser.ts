@@ -1,7 +1,5 @@
-// lib/seoParser.ts
+// server/seo/seoParser.ts
 import "server-only"
-export const runtime = "nodejs"
-
 import * as cheerio from "cheerio"
 
 export function extractSeo(html: string) {
@@ -24,7 +22,7 @@ export function extractSeo(html: string) {
     const ogTitle = $('meta[property="og:title"]').attr("content");
     const ogDescription = $('meta[property="og:description"]').attr("content");
 
-    const textLength = $("body").text().trim().length
+    const wordCount = $("body").text().trim().split(/\s+/).length
 
     const images = $("img")
     
@@ -53,7 +51,7 @@ export function extractSeo(html: string) {
         lang,
         ogTitle,
         ogDescription,
-        textLength,
+        wordCount,
         images: {
             total: totalImages,
             withoutAlt: imagesWithoutAlt
