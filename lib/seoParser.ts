@@ -1,4 +1,6 @@
 // lib/seoParser.ts
+export const runtime = "nodejs"
+
 import * as cheerio from "cheerio"
 
 export function extractSeo(html: string) {

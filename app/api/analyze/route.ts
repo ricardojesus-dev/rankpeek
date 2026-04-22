@@ -1,4 +1,6 @@
 // app/api/analyze/route.ts
+export const runtime = "nodejs"
+
 import { extractSeo } from "@/lib/seoParser";
 import { generateInsights } from "@/lib/insights";
 import { calculateScoreV2 } from "@/lib/score/index";
