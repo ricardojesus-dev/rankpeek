@@ -41,43 +41,27 @@ export default function UrlInput({ setData }: Props){
         
     }
     return(
-        <div style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "12px",
-            maxWidth: "500px",
-            margin: "0 auto"
-            }}>
+        <div className="flex flex-col items-center gap-4 max-w-xl mx-auto mt-10">
         
             <input
                 type="text"
                 placeholder="Enter a website URL (https://...)"
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
-                style={{
-                    padding: "12px",
-                    borderRadius: "8px",
-                    border: "1px solid #ccc",
-                    fontSize: "14px"
-                }}
+                className="w-full px-4 py-3 rounded-xl bg-zing-900 border border-zinc-700 text-white placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-500"
                 />
 
             <button
                 onClick={handleAnalyze}
                 disabled={loading || !url}
-                style={{
-                    padding: "12px",
-                    borderRadius: "8px",
-                    background: loading ? "#999" : "#000",
-                    color: "white",
-                    fontWeight: "bold",
-                    cursor: "pointer"
-                }}
+                className="w-full py-3 rounded-xl font-semibold transition
+                        bg-white text-black hover:bg-zinc-200
+                        disabled:opacity-40 disabled:cursor-not-allowed"
                 >
                 {loading ? "Analyzing..." : "Analyze SEO"}
             </button>
             {error && (
-                <p style={{ color: "red", fontSize: "12px" }}>
+                <p className="text-sm text-red-400">
                     {error}
                 </p>
             )}
