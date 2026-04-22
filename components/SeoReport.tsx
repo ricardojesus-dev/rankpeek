@@ -1,7 +1,7 @@
 // components/SeoReport.tsx
 import type { SeoReportData } from "@/types/seoReport"
 import ScoreCircle from "@/components/ScoreCircle"
-import { getSeoGrade } from "@/lib/score/grade"
+
 
 import {
   BarChart3,
