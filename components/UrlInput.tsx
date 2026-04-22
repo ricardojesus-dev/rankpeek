@@ -4,6 +4,10 @@
 import { useState } from "react"
 import type { SeoReportData } from "@/types/seoReport"
 import { Search, Loader2, Link as LinkIcon } from "lucide-react"
+import { normalizeUrl } from "@/lib/utils/normalizeUrl"
+import { UrlStatus } from "@/types/urlStatus"
+import { isValidUrl } from "@/lib/utils/urlValidator"
+
 
 type Props = {
   setData: (data: SeoReportData) => void
@@ -13,27 +17,41 @@ export default function UrlInput({ setData }: Props) {
   const [url, setUrl] = useState("")
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  
+  const [status, setStatus] = useState<UrlStatus>("idle");
 
   async function handleAnalyze() {
-    setLoading(true)
+
     setError(null)
+    if(!isValidUrl(url)){
+        setStatus("invalid_format");
+        setError("Invalid URL format");
+        return;
+    }
+
+    setStatus("valid_format");
+    setLoading(true);
+    setStatus("checking");
 
     try {
+      const cleanUrl = normalizeUrl(url)
+
       const res = await fetch("/api/analyze", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ url }),
+        body: JSON.stringify({ url: cleanUrl }),
       })
 
       const data = await res.json()
 
       if (!res.ok) throw new Error(data?.error || "API Error")
-
-      setData(data)
-      setUrl("")
-    } catch (error) {
+      
+      setStatus("reachable");
+      setData(data);
+      setUrl("");
+    } catch (error: any) {
+      setStatus("unreachable")
       setError("Something went wrong analyzing the URL")
-      console.error("Error: ", error)
     } finally {
       setLoading(false)
     }
