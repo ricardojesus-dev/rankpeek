@@ -8,20 +8,30 @@ type Props = {
 
 export default function UrlInput({ setData }: Props){
     const [url, setUrl] = useState("");
-    
+    const [loading,setLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null)
+
     async function handleAnalyze() {
-        const res = await fetch('/api/analyze',{
-            method:"POST",
-            headers: {
-                "Content-Type":"application/json"
-            },
-            body: JSON.stringify({url})
-        });
+        setLoading(true);
+        try{
+            const res = await fetch('/api/analyze',{
+                method:"POST",
+                headers: {
+                    "Content-Type":"application/json"
+                },
+                body: JSON.stringify({url})
+            });
 
-        const data = await res.json();
-        setData(data);
+            const data = await res.json();
+            setData(data);
+            setUrl("")
 
-        console.log(data);
+        } catch (error){
+            setError("Something went wrong analyzing the URL")
+            console.error("Error: ", error);
+        }
+
+        setLoading(false);
         
     }
     return(
@@ -33,8 +43,8 @@ export default function UrlInput({ setData }: Props){
                 onChange={ (e) => setUrl(e.target.value)}
             />
 
-            <button onClick={handleAnalyze}>
-                Analyze
+            <button onClick={handleAnalyze} disabled = {loading || !url}>
+                {loading ? "Analyzing...":"Analize"}
             </button>
             
             
