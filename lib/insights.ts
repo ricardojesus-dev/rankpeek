@@ -17,9 +17,9 @@ export function generateInsights(data: Input) {
         warnings.push("Title is too long")
     }
 
-    if (!data.metaDescription) {
-        warnings.push("No meta description found")
-    }
+    // if (!data.metaDescription) {
+    //     warnings.push("No meta description found")
+    // }
 
     if (data.title) good.push("Title exists")
     if (data.h1) good.push("H1 exists")
