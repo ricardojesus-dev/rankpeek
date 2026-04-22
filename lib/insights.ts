@@ -1,33 +1,71 @@
-type Input = {
-    title: string
-    h1: string
-    metaDescription: string
+type SeoData = {
+  title?: string
+  metaDescription?: string
+  h1?: string[]
+  images?: {
+    total: number
+    withoutAlt: number
+  }
+  links?: {
+    internal: number
+    external: number
+  }
+  wordCount?: number
+  ogTitle?: string
+  ogDescription?: string
 }
 
-export function generateInsights(data: Input) {
-    const issues: string[] = []
-    const warnings: string[] = []
-    const good: string[] = []
+export function generateInsights(data: SeoData) {
+  const issues: string[] = []
+  const warnings: string[] = []
+  const good: string[] = []
 
-    if (!data.title) issues.push("Missing title")
-    if (!data.h1) issues.push("Missing H1")
-    if (!data.metaDescription) issues.push("Missing meta description")
+  // TITLE
+  if (!data.title) issues.push("Missing title")
+  else good.push("Title exists")
 
-    if (data.title && data.title.length > 60) {
-        warnings.push("Title is too long")
-    }
+  // META
+  if (!data.metaDescription) issues.push("Missing meta description")
+  else good.push("Meta description exists")
 
-    // if (!data.metaDescription) {
-    //     warnings.push("No meta description found")
-    // }
+  // H1
+  const h1Count = data.h1?.length ?? 0
 
-    if (data.title) good.push("Title exists")
-    if (data.h1) good.push("H1 exists")
-    if (data.metaDescription) good.push("Meta description exists")
+  if (h1Count === 0) issues.push("Missing H1")
+  else if (h1Count > 1) warnings.push("Multiple H1 tags detected")
+  else good.push("Single H1 present")
 
-    return {
-        issues,
-        warnings,
-        good
-    }
+  // IMAGES
+  if (data.images?.withoutAlt && data.images.withoutAlt > 0) {
+    warnings.push(`${data.images.withoutAlt} images missing alt text`)
+  } else if (data.images?.total) {
+    good.push("Images optimized")
+  }
+
+  // WORD COUNT
+  if (data.wordCount && data.wordCount < 300) {
+    warnings.push("Low word count (<300 words)")
+  } else if (data.wordCount) {
+    good.push("Good content length")
+  }
+
+  // LINKS
+  if (data.links?.internal === 0) {
+    warnings.push("No internal links found")
+  } else if (data.links?.internal) {
+    good.push("Internal links detected")
+  }
+
+  if (data.links?.external && data.links.external > 0) {
+    good.push("External links present")
+  }
+
+  // OG
+  if (!data.ogTitle) warnings.push("Missing OG title")
+  else good.push("OG title present")
+
+  if (!data.ogDescription) warnings.push("Missing OG description")
+  else good.push("OG description present")
+
+  return { issues, warnings, good }
 }
