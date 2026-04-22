@@ -1,4 +1,4 @@
-import { useMemo } from "react"
+import { getSeoGrade } from "@/lib/score/grade"
 
 type Props = {
   score?: number
@@ -13,17 +13,14 @@ export default function ScoreCircle({ score = 0 }: Props) {
   const progress = score / 100
   const strokeDashoffset = circumference - progress * circumference
 
-  const color = useMemo(() => {
-    if (score >= 80) return "#4ade80" // green
-    if (score >= 50) return "#facc15" // yellow
-    return "#f87171" // red
-  }, [score])
+  const { color: gradeColor, grade } = getSeoGrade(score)
 
   return (
     <div className="flex items-center justify-center">
+
       <svg height={radius * 2} width={radius * 2}>
 
-        {/* Background */}
+        {/* BACKGROUND */}
         <circle
           stroke="#27272a"
           fill="transparent"
@@ -33,9 +30,9 @@ export default function ScoreCircle({ score = 0 }: Props) {
           cy={radius}
         />
 
-        {/* Progress */}
+        {/* PROGRESS */}
         <circle
-          stroke={color}
+          stroke={gradeColor}
           fill="transparent"
           strokeWidth={stroke}
           strokeLinecap="round"
@@ -51,19 +48,28 @@ export default function ScoreCircle({ score = 0 }: Props) {
           }}
         />
 
-        {/* SCORE TEXT */}
+        {/* SCORE (MAIN) */}
         <text
           x="50%"
-          y="50%"
-          dominantBaseline="middle"
+          y="48%"
           textAnchor="middle"
-          style={{
-            fill: color,
-            fontSize: "32px",
-            fontWeight: "700"
-          }}
+          fill={gradeColor}
+          fontSize="22"
+          fontWeight="700"
         >
           {score}
+        </text>
+
+        {/* GRADE (SECONDARY) */}
+        <text
+          x="50%"
+          y="65%"
+          textAnchor="middle"
+          fill="#a1a1aa"
+          fontSize="12"
+          fontWeight="500"
+        >
+          Grade {grade}
         </text>
 
       </svg>

@@ -1,5 +1,7 @@
 import type { SeoReportData } from "@/types/seoReport"
 import ScoreCircle from "@/components/ScoreCircle"
+import { getSeoGrade } from "@/lib/score/grade"
+
 import {
   BarChart3,
   FileText,
@@ -34,13 +36,10 @@ export default function SeoReport({ data }: Props) {
     )
   }
 
-  const getColor = (score: number) => {
-    if (score >= 80) return "text-green-400"
-    if (score >= 50) return "text-yellow-400"
-    return "text-red-400"
-  }
+  const score = data.score ?? 0
+  const { grade, color } = getSeoGrade(score)
 
-  const scoreColor = data.score ? getColor(data.score) : "text-zinc-400"
+  
 
   return (
     <div className="mt-8 grid gap-6 text-white max-w-5xl mx-auto">
