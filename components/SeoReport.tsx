@@ -28,100 +28,54 @@ export default function SeoReport({ data }: Props) {
             </div>
         )
     }
-    const getColor = (score:number) => {
-        if (score >= 80) return "green"
-        if (score >= 50) return "orange"
-        return "red"
+    const getColor = (score: number) => {
+        if (score >= 80) return "text-green-400"
+        if (score >= 50) return "text-yellow-400"
+        return "text-red-400"
     }
     const scoreColor = data.score ? getColor(data.score) : "gray"
 
     return (
-        <div style={{
-            marginTop: 30,
-            display: "flex",
-            flexDirection: "column",
-            gap: "20px"
-        }}>
+        <div className="mt-8 flex flex-col gap-5 text-white">
     
             {/* SCORE SECTION*/}
-            <div style={{
-                padding: "20px",
-                borderRadius: "12px",
-                background: "#f5f5f5",
-                textAlign: "center"
-                }}>
-                <h2>SEO Score</h2>
+            <div className="p-6 rounded-xl bg-zinc-900 text-center border border-zinc-800">
+                <h2 className="text-lg text-zinc-400">SEO Score</h2>
 
-                <div style={{
-                    fontSize: 56,
-                    fontWeight: "bold",
-                    color: scoreColor
-                }}>
+                <div className={`text-6xl font-bold ${scoreColor}`}>
                     {data.score}/100
                 </div>
             </div>
 
             {/* INFO GRID*/}
-            <div style={{
-                padding: "20px",
-                borderRadius: "12px",
-                background: "white",
-                border: "1px solid #eee",
-                display: "flex",
-                flexDirection: "column",
-                gap: "8px"
-                }}>
+            <div className="p-5 rounded-xl bg-zinc-900 border border-zinc-800 flex flex-col gap-2">
                 <div><strong>Title:</strong> {data.title}</div>
                 <div><strong>H1:</strong> {data.h1}</div>
                 <div><strong>Meta:</strong> {data.metaDescription || "Missing"}</div>
             </div>
 
             {/* INSIGHTS */}
-            <div style={{
-                padding: "20px",
-                borderRadius: "12px",
-                background: "#fafafa"
-            }}>
-                <h3 style={{ marginBottom: "10px" }}>Insights</h3>
+            <div className="p-5 rounded-xl bg-zinc-900 border border-zinc-800">
+            
+            <h3 className="mb-3 text-zinc-300">Insights</h3>
 
-                <div style={{
-                    display: "flex",
-                    gap: "10px",
-                    flexWrap: "wrap"
-                }}>
+                <div className="flex flex-wrap gap-2">
+                {/* ISSUES */}
                 {data.issues?.map((issue, i) => (
-                    <span key={i} style={{
-                        background: "#ffe5e5",
-                        color: "#c00",
-                        padding: "6px 10px",
-                        borderRadius: "8px",
-                        fontSize: "12px"
-                    }}>
+                    <span key={i} className="text-xs px-2 py-1 rounded-md bg-red-500/20 text-red-400">
                         {issue}
                     </span>
                 ))}
 
-                {data.warnings?.map((warning, i) => (
-                    <span key={i} style={{
-                        background: "#fff4e5",
-                        color: "#b36b00",
-                        padding: "6px 10px",
-                        borderRadius: "8px",
-                        fontSize: "12px"
-                    }}>
-                        {warning}
+                {data.warnings?.map((w, i) => (
+                    <span key={i} className="text-xs px-2 py-1 rounded-md bg-yellow-500/20 text-yellow-400">
+                        {w}
                     </span>
                 ))}
 
-                {data.good?.map((good, i) => (
-                    <span key={i} style={{
-                        background: "#e6ffe6",
-                        color: "#0a7a0a",
-                        padding: "6px 10px",
-                        borderRadius: "8px",
-                        fontSize: "12px"
-                    }}>
-                        {good}
+                {data.good?.map((g, i) => (
+                    <span key={i} className="text-xs px-2 py-1 rounded-md bg-green-500/20 text-green-400">
+                        {g}
                     </span>
                 ))}
                 </div>
