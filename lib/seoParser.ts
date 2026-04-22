@@ -1,4 +1,5 @@
 // lib/seoParser.ts
+import "server-only"
 export const runtime = "nodejs"
 
 import * as cheerio from "cheerio"
