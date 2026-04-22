@@ -3,7 +3,28 @@ type Props = {
 }
 
 export default function SeoReport({ data }: Props) {
-    if (!data) return null
+    if (!data) {
+        return (
+            <div style={{
+                marginTop:40,
+                textAlign:"center",
+                color:"#666"
+            }}>
+            <h2>Welcome to RankPeek</h2>
+            <p>Enter a URL to analyze its SEO structure</p>
+
+            <div style={{
+                marginTop:10,
+                fontSize:"12px",
+                opacity:0.7
+            }}>
+                Example: https://example.com
+            </div>
+            
+                
+            </div>
+        )
+    }
     const getColor = (score:number) => {
         if (score >= 80) return "green"
         if (score >= 50) return "orange"
