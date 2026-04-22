@@ -1,3 +1,4 @@
+// lib/score/index.ts
 import { scoreContent } from "./content";
 import { scoreStructure } from "./structure";
 import { scoreTechnical } from "./technical";

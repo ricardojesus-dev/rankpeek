@@ -1,3 +1,4 @@
+// lib/seoParser.ts
 import * as cheerio from "cheerio"
 
 export function extractSeo(html: string) {
@@ -21,6 +22,24 @@ export function extractSeo(html: string) {
     const ogDescription = $('meta[property="og:description"]').attr("content");
 
     const textLength = $("body").text().trim().length
+
+    const images = $("img")
+    
+    const totalImages = images.length
+    const imagesWithoutAlt = images.filter(
+        (_,img) => !$(img).attr("alt") || $(img).attr("alt")!.trim() === ""
+    ).length
+
+    const links = $("a");
+
+    const internalLinks = links.filter( (_,a) => {
+        const href = $(a).attr("href") || ""
+        return href.startsWith("/") || href.includes("your-domain")
+    }).length
+
+    const externalLinks = links.length - internalLinks
+
+
     return {
         title,
         h1,
@@ -31,6 +50,15 @@ export function extractSeo(html: string) {
         lang,
         ogTitle,
         ogDescription,
-        textLength
+        textLength,
+        images: {
+            total: totalImages,
+            withoutAlt: imagesWithoutAlt
+        },
+
+        links: {
+            internal: internalLinks,
+            external: externalLinks
+        }
     }
 }

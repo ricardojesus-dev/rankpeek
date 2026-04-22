@@ -1,10 +1,11 @@
+// lib/score/structure.ts
 export function scoreStructure(data: {
     h1: string[]
     h2: string[]
     h3: string[]
     
 }) {
-    let score = 30;
+    let score = 25;
     const issues:string[] = []
 
     if (data.h2.length === 0){

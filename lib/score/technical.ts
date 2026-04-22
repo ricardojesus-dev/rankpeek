@@ -1,10 +1,11 @@
+// lib/score/technical.ts
 export function scoreTechnical(data: {
     canonical?:string
     lang?:string
     ogTitle?:string
     ogDescription?:string
 }){
-    let score = 20;
+    let score = 25;
     const issues:string [] = []
 
     if(!data.canonical){
@@ -22,8 +23,8 @@ export function scoreTechnical(data: {
         issues.push("Missing OG title");
     }
 
-    if (data.ogDescription){
-        score -= 5;
+    if (!data.ogDescription){
+        score -= 5
         issues.push("Missing OG description")
     }
 

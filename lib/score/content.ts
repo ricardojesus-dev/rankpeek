@@ -1,9 +1,10 @@
+// lib/score/content.ts
 export function scoreContent(data: {
     title:string
     metaDescription:string
     h1: string[]
 }){
-    let score = 40;
+    let score = 30;
     const issues: string[] = [];
 
     //Title
