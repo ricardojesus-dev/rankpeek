@@ -1,3 +1,4 @@
+// types/seoReports.ts
 export type SeoReportData = {
   url?: string
   title?: string
@@ -6,7 +7,7 @@ export type SeoReportData = {
   h3?: string[]
   lang?: string
   canonical?: string
-  textLength: number
+  textLength?: number
   metaDescription?: string
   ogTitle?: string
   ogDescription?: string
@@ -25,7 +26,7 @@ export type SeoReportData = {
   score?: number
   breakdown?: string[]
 
-  // 👇 AÑADE ESTO
+
   issues?: string[]
   warnings?: string[]
   good?: string[]

@@ -1,3 +1,4 @@
+// components/UrlInput.tsx
 "use client"
 
 import { useState } from "react"
@@ -18,6 +19,7 @@ export default function UrlInput({ setData }: Props) {
     setError(null)
 
     try {
+        
       const res = await fetch("/api/analyze", {
         method: "POST",
         headers: {
@@ -26,11 +28,14 @@ export default function UrlInput({ setData }: Props) {
         body: JSON.stringify({ url })
       })
 
+      const data = await res.json()
+
+      
       if (!res.ok) {
-        throw new Error("API Error")
+        throw new Error(data?.error || "API Error")
       }
 
-      const data = await res.json()
+      
       setData(data)
       setUrl("")
     } catch (error) {
@@ -87,9 +92,9 @@ export default function UrlInput({ setData }: Props) {
       {/* ERROR */}
       {error && (
         <div className="w-full p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-sm text-center">
-          {error}
+            ⚠ {error}
         </div>
-      )}
+        )}
 
     </div>
   )
