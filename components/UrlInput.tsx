@@ -2,7 +2,11 @@
 "use client"
 import { useState } from "react"
 
-export default function UrlInput(){
+type Props = {
+    setData: (data:any) => void
+}
+
+export default function UrlInput({ setData }: Props){
     const [url, setUrl] = useState("");
     
     async function handleAnalyze() {
@@ -15,6 +19,7 @@ export default function UrlInput(){
         });
 
         const data = await res.json();
+        setData(data);
 
         console.log(data);
         
@@ -32,7 +37,7 @@ export default function UrlInput(){
                 Analyze
             </button>
             
-            <p>{url}</p>
+            
         </div>
     )
 }

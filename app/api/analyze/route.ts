@@ -1,4 +1,5 @@
 import * as cheerio from "cheerio"
+import { calculateScore } from "@/lib/score";
 
 export async function POST(req: Request) {
     const body = await req.json();
@@ -16,13 +17,19 @@ export async function POST(req: Request) {
     $('meta[name="description"]').attr("content") ||
     $('meta[property="og:description"]').attr("content") ||
     $('meta[name="twitter:description"]').attr("content") ||
-    null
+    ""
 
+    const score = calculateScore({
+        title,
+        h1,
+        metaDescription
+    })
 
     return Response.json({
         url, 
         title,
         h1,
-        metaDescription
+        metaDescription,
+        score
     });
 }
